@@ -558,23 +558,46 @@ template<class Key, class Value>
 Node<Key, Value>*
 BinarySearchTree<Key, Value>::predecessor(Node<Key, Value>* current)
 {
-    if (current->getLeft() == nullptr) return nullptr;
-    
-    current = current->getLeft();
-    while (current->getRight() != nullptr) current = current->getRight();
-
-    return current;
+    if (current->getLeft() != nullptr) 
+    {
+      current = current->getLeft();
+      while (current->getRight() != nullptr) current = current->getRight();
+      return current;
+    }
+    else
+    {
+      Node<Key, Value>* prev = current;
+      while (current->getParent() != nullptr)
+      {
+        current = current->getParent();
+        if (prev == current->getRight()) return current;
+        prev = current;
+      }
+    }
+    return nullptr;
 }
 template<class Key, class Value>
 Node<Key, Value>*
 BinarySearchTree<Key, Value>::successor(Node<Key, Value>* current)
 {
-    if (current->getRight() == nullptr) return nullptr;
+    if (current->getRight() != nullptr) 
+    {
+      current = current->getRight();
+      while (current->getLeft() != nullptr) current = current->getLeft();
+      return current;
+    }
+    else
+    {
+      Node<Key, Value>* prev = current;
+      while (current->getParent() != nullptr)
+      {
+        current = current->getParent();
+        if (prev == current->getLeft()) return current;
+        prev = current;
+      }
+    }
+    return nullptr;
     
-    current = current->getRight();
-    while (current->getLeft() != nullptr) current = current->getLeft();
-
-    return current;
 }
 
 
